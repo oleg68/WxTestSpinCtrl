@@ -94,7 +94,7 @@ jobs:
       uses: nanoufo/action-upload-artifacts-and-release-assets@v2
       with:
         path: |
-          ${{github.workspace}}/build/${{ matrix.for }}/grandorgue*${{needs.calc_ver.outputs.full_ver}}*
+          ${{github.workspace}}/build/${{ matrix.for }}/wxtestspinctrl*${{needs.calc_ver.outputs.full_ver}}*
         upload-release-files: ${{ needs.calc_ver.outputs.release_flag }}
         release-upload-url: ${{ needs.calc_ver.outputs.release_upload_url }}
         if-no-files-found: error
