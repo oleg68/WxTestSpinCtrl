@@ -30,8 +30,7 @@ export LANG=C
 
 GO_PRMS="-DCMAKE_BUILD_TYPE=Release \
   $CMAKE_VERSION_PRMS \
-  -DCMAKE_PACKAGE_SUFFIX=$PACKAGE_SUFFIX \
-  $($DIR/cmake-prm-yaml-cpp.bash $TARGET_ARCH)"
+  -DCMAKE_PACKAGE_SUFFIX=$PACKAGE_SUFFIX"
 
 # a workaround of the new dpkg-shlibdeps that prevents cpack from making the DEB package
 if ! dpkg-shlibdeps --help 1>/dev/null; then
