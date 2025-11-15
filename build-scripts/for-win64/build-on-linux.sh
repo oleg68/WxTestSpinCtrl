@@ -6,8 +6,10 @@
 
 set -e
 
-if [[ -n "$1" ]]; then
-	SRC_DIR=$1
+source $(dirname $0)/../set-ver-prms.sh "$1" "$2"
+
+if [[ -n "$3" ]]; then
+	SRC_DIR=$3
 else
 	SRC_DIR=$(readlink -f $(dirname $0)/../..)
 fi
@@ -22,16 +24,18 @@ export LANG=C
 
 WX_CONFIG=$MINGW_DIR/bin/wx-config; export WX_CONFIG
 
-CMAKE_VERSION_PRMS="-DVERSION=1.0.0"
+source $(dirname $0)/set-mingw-vars.sh
 
-CMAKE_WIN_PRMS="-DASIO_SDK_DIR=/usr/local/asio-sdk \
-  -DCV2PDB_EXE=/usr/local/share/wine/cv2pdb/cv2pdb.exe \
+CMAKE_WIN_PRMS="-DCV2PDB_EXE=/usr/local/share/wine/cv2pdb/cv2pdb.exe \
   -DINSTALL_DEPEND=ON \
   -DMSYS=1 -DSTATIC=1 \
   -DRTAUDIO_USE_ASIO=ON \
   -DVC_PATH=/usr/local/share/wine/msvc/VC/Tools/MSVC/14.29.30133/bin/Hostx86/x86"
 
-cmake $CMAKE_MINGW_PRMS $CMAKE_WIN_PRMS $CMAKE_VERSION_PRMS . $SRC_DIR
+CMAKE_APP_PRMS="-DGO_USE_JACK=ON $CMAKE_VERSION_PRMS"
+
+cmake $CMAKE_MINGW_PRMS $CMAKE_WIN_PRMS $CMAKE_APP_PRMS . $SRC_DIR
 make $PARALLEL_PRMS VERBOSE=1 package
 
 popd
+
